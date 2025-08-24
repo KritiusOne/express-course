@@ -1,9 +1,12 @@
 import express from "express"
 import { CONFIG } from "./config/config.js";
 import bodyParser from "body-parser";
+import { loggerMiddleware } from "./middlewares/logger.js";
+
 const app = express()
 app.use(express.json())
 app.use(bodyParser.urlencoded({extended: true}))
+app.use(loggerMiddleware);
 
 const PORT = CONFIG.PORT || 3000
 
