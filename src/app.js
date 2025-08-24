@@ -2,11 +2,13 @@ import express from "express"
 import { CONFIG } from "./config/config.js";
 import bodyParser from "body-parser";
 import { loggerMiddleware } from "./middlewares/logger.js";
+import { errorHandler } from "./middlewares/errorHandler.js";
 
 const app = express()
 app.use(express.json())
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(loggerMiddleware);
+app.use(errorHandler)
 
 const PORT = CONFIG.PORT || 3000
 
@@ -58,6 +60,10 @@ app.post("/api/data", (req, res)=>{
     data
   })
 });
+
+app.get("/error", (req, res, next)=>{
+  next(new Error("Wished error"))
+})
 
 app.listen(PORT, ()=>{
   console.log(`
