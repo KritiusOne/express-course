@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node --watch src/app.js"
+    "dev": "node --watch src/app.js",
+    "tsc": "tsc"
   },
   "keywords": [],
   "author": "Julio Rodriguez <jrodriguezdu7@gmail.com>",
@@ -15,5 +16,8 @@
     "express": "^5.1.0"
   },
   "description": "",
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "typescript": "^5.9.2"
+  }
 }
