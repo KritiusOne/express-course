@@ -11,9 +11,11 @@
   "author": "Julio Rodriguez <jrodriguezdu7@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "@types/express": "^5.0.3",
     "body-parser": "^2.2.0",
     "dotenv": "^17.2.1",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "mongodb": "^6.19.0"
   },
   "description": "",
   "type": "module",
