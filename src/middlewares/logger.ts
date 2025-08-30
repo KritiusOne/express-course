@@ -1,4 +1,5 @@
-export const loggerMiddleware = (req, res, next)=> {
+import { Request, Response, NextFunction } from "express";
+export const loggerMiddleware = (req: Request, res: Response, next: NextFunction)=> {
   const timeStamp = new Date().toISOString();
 
   console.log(`
