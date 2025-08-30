@@ -1,9 +1,13 @@
 import dotenv from "dotenv"
 dotenv.config()
 const {
-  PORT
+  PORT,
+  NODE_ENV,
+  CONNECTION_STRING
 } = process.env
 
 export const CONFIG = {
-  PORT
+  PORT,
+  NODE_ENV,
+  CONNECTION_STRING
 }
