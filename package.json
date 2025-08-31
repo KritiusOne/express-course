@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node --watch src/app.js",
+    "dev": "tsx watch src/app.ts",
     "tsc": "tsc"
   },
   "keywords": [],
@@ -14,7 +14,8 @@
     "body-parser": "^2.2.0",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
-    "mongodb": "^6.19.0"
+    "mongodb": "^6.19.0",
+    "tsx": "^4.20.5"
   },
   "description": "",
   "type": "module",
