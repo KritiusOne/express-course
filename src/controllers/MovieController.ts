@@ -20,10 +20,18 @@ export async function getMovie( req: Request, res: Response ) {
   })
 }
 export async function getMovies( req: Request, res: Response ) {
+  console.log("Getting all movies")
+  console.log("query params")
+  console.log(JSON.stringify(req.query))
+  const query = {
+    limit: req.query.limit ? parseInt(req.query.limit as string) : 0,
+    page: req.query.page ? parseInt(req.query.page as string) : 0
+  }
   try {
-    const movies = await movieServices.getAllMovies()
+    const movies = await movieServices.getMovies(query.limit, query.page)
     return res.status(200).json({
       message: `Movies was finded successfully`,
+      movieNumber: movies.length,
       movies
     })
   } catch (error) {
