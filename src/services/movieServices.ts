@@ -1,11 +1,12 @@
 import { ObjectId } from "mongodb";
 import { DB } from "../config/DB.js";
+import { Movie } from "../models/Movie.js";
 
-async function getMovie(id: string) {
+async function getMovie(id: string): Promise<Movie | null> {
   try {
     const movies = (await DB()).collection("movies")
     const objectId = new ObjectId(id)
-    return await movies.findOne({
+    return await movies.findOne<Movie>({
       _id: objectId
     })
   } catch (error) {
@@ -14,7 +15,7 @@ async function getMovie(id: string) {
   }
 }
 
-async function getMovies(limit?: number, page?: number) { 
+async function getMovies(limit?: number, page?: number): Promise<Movie[]> {
   const query: { limit: number, skip: number } = {
     limit: 50,
     skip: 0
@@ -27,7 +28,7 @@ async function getMovies(limit?: number, page?: number) {
   }
   try {
     const movies = (await DB()).collection("movies")
-    return await movies.find({}).limit(query.limit).skip(query.skip).toArray()
+    return await movies.find<Movie>({}).limit(query.limit).skip(query.skip).toArray()
   } catch (error) {
     console.error(error)
     throw new Error(`Error Searching all movies`)
