@@ -1,7 +1,8 @@
 import { Router } from "express";
-import { getMovie, getMovies } from "../controllers/MovieController.js";
+import { getMovie, getMovies, createMovie } from "../controllers/MovieController.js";
 
 export const movieRouter = Router()
 
 movieRouter.get("/movie/:id", getMovie)
 movieRouter.get("/movies", getMovies)
+movieRouter.post("/movie", createMovie) 

@@ -35,7 +35,26 @@ async function getMovies(limit?: number, page?: number): Promise<Movie[]> {
   }
 }
 
+async function createMovie(movie: Movie): Promise<Movie | undefined> {
+  try {
+    const movies = (await DB()).collection("movies")
+    if(movie && movie.title){
+      const result = await movies.insertOne(movie)
+      console.log("Insert result")
+      console.log(JSON.stringify(result))
+      return {
+        _id: result.insertedId,
+        ...movie
+      }
+    }
+  } catch (error) {
+    console.error(error)
+    throw new Error(`Error creating movie`)
+  }
+
+}
 export const movieServices = {
   getMovie,
-  getMovies
+  getMovies,
+  createMovie
 }

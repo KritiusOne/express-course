@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { movieServices } from "../services/movieServices.js";
+import { CreateMovieDTO, Movie } from "../models/Movie.js";
 
 export async function getMovie( req: Request, res: Response ) {
   const id = req.params.id
@@ -40,4 +41,31 @@ export async function getMovies( req: Request, res: Response ) {
       message: `Error searching all movies`
     }) 
   }
+}
+
+// TODO: Body validation with a library like Joi, Yup or Zod
+export async function createMovie( req: Request, res: Response ) {
+  if(!req.body || Object.keys(req.body).length === 0){
+    return res.status(400).json({
+      message: "Body request is required"
+    })
+  }
+  const body: CreateMovieDTO = req.body
+  console.log("Creating movie with body")
+
+  if(!body.title){
+    return res.status(400).json({
+      message: "Title is required"
+    })
+  }
+  const movie  = await movieServices.createMovie({...body } as Movie)
+  if(!movie){
+    return res.status(500).json({
+      message: "Error creating movie"
+    })
+  }
+  return res.status(201).json({
+    message: "Movie created successfully",
+    movie
+  })
 }
