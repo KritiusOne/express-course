@@ -51,10 +51,45 @@ async function createMovie(movie: Movie): Promise<Movie | undefined> {
     console.error(error)
     throw new Error(`Error creating movie`)
   }
+}
 
+// TODO: Error system handling with custom errors
+// TODO: Add elements -> Don't replace every array or object fields
+async function updateMovie(id: string, movie: Movie): Promise<Movie | undefined> {
+  if(!id || id === "" || !movie){
+    return
+  }
+  try {
+    const movies = (await DB()).collection("movies")
+    const objectId = new ObjectId(id)
+    const prevMovie = await movies.findOne<Movie>({
+      _id: objectId
+    })
+    if(!prevMovie){
+      throw new Error(`Movie with id ${id} not found`)
+    }
+
+    const toUpdate: Movie = {
+      ...prevMovie,
+      ...movie
+    }
+    const result = await movies.updateOne({
+      _id: objectId,
+    }, {
+      $set: toUpdate
+    })
+    if(result.modifiedCount === 0){
+      throw new Error(`Movie with id ${id} not updated`)
+    }
+    return toUpdate
+  } catch (error) {
+    console.error(error)
+    throw new Error(`Error updating movie ${id}`)
+  }
 }
 export const movieServices = {
   getMovie,
   getMovies,
-  createMovie
+  createMovie,
+  updateMovie
 }

@@ -69,3 +69,36 @@ export async function createMovie( req: Request, res: Response ) {
     movie
   })
 }
+
+//TOOD: Body validation with a library like Joi, Yup or Zod
+export async function updateMovie( req: Request, res: Response ) {
+  console.log("Updating movie")
+  console.log("params")
+  console.log(JSON.stringify(req.params))
+  console.log("body")
+  console.log(JSON.stringify(req.body))
+  const id = req.params.id
+  if(!id){
+    return res.status(400).json({
+      message: "Id params is required"
+    })
+  }
+  if(!req.body || Object.keys(req.body).length === 0){
+    return res.status(400).json({
+      message: "Body request is required"
+    })
+  }
+  const body: Movie = req.body
+  console.log("Updating movie with body")
+  console.log(JSON.stringify(body))
+  const movie  = await movieServices.updateMovie(id ?? "", body)
+  if(!movie){
+    return res.status(500).json({
+      message: "Error updating movie"
+    })
+  }
+  return res.status(200).json({
+    message: "Movie updated successfully",
+    movie
+  })
+}
